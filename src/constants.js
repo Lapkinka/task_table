@@ -1,0 +1,4 @@
+export const START = "START",
+  SUCCESS = "SUCCESS",
+  FAIL = "FAIL",
+  LOAD_DATA = "LOAD_DATA"
