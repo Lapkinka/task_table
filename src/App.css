@@ -1,7 +1,6 @@
 .App {
   text-align: center;
 }
-
 .table_blur {
   background: #f5ffff;
   border-collapse: collapse;
@@ -29,6 +28,9 @@
 .table_blur th:hover {
   cursor: pointer;
 }
+.table_blur th:first-child:hover {
+  cursor: default !important;
+}
 .table_blur tr:nth-child(odd) {
   background: #ebf3f9;
 }
@@ -48,12 +50,8 @@
   position: relative;
   transition: all 0.5s ease;
 }
-.table_blur tbody:hover td {
-  /*color: transparent;*/
-  /*text-shadow: 0 0 3px #a09f9d;*/
-}
 .table_blur tbody:hover tr:hover td {
   background: rgba(255, 191, 255, 0.6);
 }
-.red{color: red;}
-.blue{color: blue;}
+.red{color: red !important;}
+.blue{color: blue !important;}

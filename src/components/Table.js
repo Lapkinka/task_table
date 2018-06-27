@@ -1,36 +1,36 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import {connect} from "react-redux"
 import {loadData,changeNumbers} from "../AC"
 import table from '../reducers/table'
 import {typesSelectorFactory} from '../help'
 
 class Table extends Component {
-
   componentWillMount(){
     this.props.loadData()
   }
-  // componentWillUpdate(nextProps,nextState){
-  //   const {id,info,loadFilmInfo} = nextProps
-  //   if(info._map.size < 6) loadFilmInfo(id)
-  // }
 
   render() {
     const {info,sort_type} = this.props
-      // console.log(sort_type,"sort_type")
-    console.log("info !!!!!!!",info)
     if(!info || info[0] === undefined) return null
-    const body = Array.from({length:20},(undef,index) => {
+    const body = Array.from({length:100},(undef,index) => {
         const keys = this.help.call(this, info[index])
-        if (!index) return <tr>{keys.map(elem => <th datatype={[elem,elem === sort_type.name ? sort_type.action : false]}
-                                                     onClick={this.eventCheck}>{elem}</th>)}</tr>
-        else {
-            return <tr>{
+        if (!index){
+            return <tr key={index}>
+                {keys.map(elem => <th key={`${elem}_${index}`}
+                                      className={sort_type.name === elem && sort_type.action !== undefined ? !sort_type.action ? "blue" :  "red" : ""}
+                                      datatype={[elem,elem === sort_type.name ? sort_type.action : false]}
+                                      onClick={elem !== "archived" ? this.eventCheck : null}>{elem}</th>
+                )}</tr>
+        }
+        else{
+            return <tr key={index}>{
               keys.map(elem => {
                 if(elem === "randomNum"){
-                    return <td className={info[index][elem] >= 0 ? !info[index][elem] ? "" : "red" : "blue"}>{info[index][elem]}</td>
+                    return <td key={`${elem}_${index}`} className={info[index][elem] >= 0 ? !info[index][elem] ? "" : "red" : "blue"}>
+                        {info[index][elem]}
+                        </td>
                 }
-                else return <td>{this.typeCheck.call(this,info[index][elem])}</td>
+                else return <td key={`${elem}_${index}`}>{this.typeCheck.call(this,info[index][elem === "url" ? "alternate_url" : elem])}</td>
               })
             }</tr>
         }
@@ -43,6 +43,7 @@ class Table extends Component {
         </table>
     );
   }
+
   help = (obj) =>{
     const arr = []
     for(let key in obj){
@@ -52,6 +53,7 @@ class Table extends Component {
     }
     return arr
   }
+
   typeCheck = (type) =>{
     const options = {
         year: 'numeric',
@@ -67,6 +69,7 @@ class Table extends Component {
     else if(!isNaN(Date.parse(type))) return new Date(Date.parse(type)).toLocaleString("en-US", options)
     else return type
   }
+
   eventCheck = (ev) =>{
     const {target} = ev,
         type = target.getAttribute("datatype").split(",")
@@ -76,10 +79,10 @@ class Table extends Component {
 }
 
 const mapStateToProps = () => {
-    const commentSelector = typesSelectorFactory()
+    const typesSelector = typesSelectorFactory()
     return({table}) => {
         return {
-            info:commentSelector(table),
+            info:typesSelector(table),
             sort_type:table.sort_type
         }
     }
