@@ -26,6 +26,9 @@
   width: 100%;
   background: linear-gradient(rgba(255, 255, 255, 0), rgba(255,255,255,.08));
 }
+.table_blur th:hover {
+  cursor: pointer;
+}
 .table_blur tr:nth-child(odd) {
   background: #ebf3f9;
 }
@@ -46,10 +49,11 @@
   transition: all 0.5s ease;
 }
 .table_blur tbody:hover td {
-  color: transparent;
-  text-shadow: 0 0 3px #a09f9d;
+  /*color: transparent;*/
+  /*text-shadow: 0 0 3px #a09f9d;*/
 }
 .table_blur tbody:hover tr:hover td {
-  color: #444444;
-  text-shadow: none;
+  background: rgba(255, 191, 255, 0.6);
 }
+.red{color: red;}
+.blue{color: blue;}

@@ -1,4 +1,4 @@
-import {START,SUCCESS,FAIL,LOAD_DATA} from "../constants"
+import {START,SUCCESS,FAIL,LOAD_DATA,CHANGE_NUMBERS} from "../constants"
 
 export function loadData() {
   return (dispatch) =>{
@@ -16,4 +16,13 @@ export function loadData() {
         payload:{err}
       }))
   }
+}
+
+export function changeNumbers(type) {
+    return (dispatch) =>{
+        dispatch({
+            type:CHANGE_NUMBERS,
+            payload: { type }
+        })
+    }
 }
