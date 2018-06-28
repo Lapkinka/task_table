@@ -1,4 +1,4 @@
-import { START, SUCCESS, LOAD_DATA,CHANGE_NUMBERS} from '../constants'
+import { START, SUCCESS, LOAD_DATA,CHANGE_NUMBERS,CHANGE_LINK} from '../constants'
 import {Record, OrderedMap} from 'immutable'
 
 const SortRecord = Record({

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from "react-redux"
 import {loadData,changeNumbers} from "../AC"
 import table from '../reducers/table'
+import {NavLink} from "react-router-dom"
 import {typesSelectorFactory} from '../help'
 
 class Table extends Component {
@@ -10,9 +11,11 @@ class Table extends Component {
   }
 
   render() {
-    const {info,sort_type} = this.props
+    const {info,sort_type,numberOfLinks} = this.props
     if(!info || info[0] === undefined) return null
-    const body = Array.from({length:100},(undef,index) => {
+    const countLinks = Math.ceil(numberOfLinks / 20)
+    const links = Array.from({length:countLinks},(undef,i) =><NavLink to={`/${i+1}`} key={`link_${i}`}>{i+1}</NavLink>)
+    const body = Array.from({length:20},(undef,index) => {
         const keys = this.help.call(this, info[index])
         if (!index){
             return <tr key={index}>
@@ -36,11 +39,14 @@ class Table extends Component {
         }
     })
     return (
-        <table className="table_blur">
-          <tbody>
-          {body}
-          </tbody>
-        </table>
+        <div>
+            {links}
+            <table className="table_blur">
+              <tbody>
+              {body}
+              </tbody>
+            </table>
+        </div>
     );
   }
 
@@ -80,14 +86,13 @@ class Table extends Component {
 
 const mapStateToProps = () => {
     const typesSelector = typesSelectorFactory()
-    return({table}) => {
+    return({table},ownProps) => {
         return {
-            info:typesSelector(table),
-            sort_type:table.sort_type
+            info:typesSelector(table,ownProps),
+            sort_type:table.sort_type,
+            numberOfLinks:table.entities.length
         }
     }
 }
 
 export default connect(mapStateToProps,{loadData,changeNumbers})(Table)
-
-
