@@ -1,1 +1,1 @@
-https://lapkinka.github.io/task_table/
+https://lapkinka.github.io/task_table
